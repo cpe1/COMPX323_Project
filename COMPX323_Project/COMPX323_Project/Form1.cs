@@ -15,6 +15,7 @@ namespace COMPX323_Project
     public partial class Form1 : Form
     {
         public Oracle oracle;
+        public MongoDB mongodb;
 
         public Form1()
         {
@@ -24,10 +25,21 @@ namespace COMPX323_Project
 
         void Init()
         {
+            //settings for the oracle db
             String datasource = "oracle.cms.waikato.ac.nz:1521/teaching.cms.waikato.ac.nz";
             String userid = "COMPX323_20";
             String password = "CYVchCFW4p";
             oracle = new Oracle(datasource, userid, password);
+
+            //settings for the mongo db
+            String mongo_username = "compx323-20";
+            String mongo_password = "cNTKWiq5JY7gDhsrZRi9";
+            String mongo_hostname = "mongodb.cms.waikato.ac.nz";
+            String database = "admin";
+            int port = 27017;
+
+            mongodb = new MongoDB(mongo_username, mongo_password, mongo_hostname, port, database);
+            mongodb.dbList();
         }
 
 

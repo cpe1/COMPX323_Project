@@ -8,7 +8,6 @@ namespace COMPX323_Project
 {
     static class Program
     {
-        public static Oracle oracle { get; set; }
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -19,9 +18,5 @@ namespace COMPX323_Project
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
-
-        
-
-       
     }
 }

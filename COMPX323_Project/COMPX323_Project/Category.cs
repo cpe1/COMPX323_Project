@@ -9,7 +9,6 @@ namespace COMPX323_Project
     public class Category
     {
 
-
         public Category(String name, String description)
         {
             this.name = name;
