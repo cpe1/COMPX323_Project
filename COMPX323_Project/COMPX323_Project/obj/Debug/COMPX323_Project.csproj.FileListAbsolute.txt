@@ -1,0 +1,11 @@
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\bin\Debug\COMPX323_Project.exe.config
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\bin\Debug\COMPX323_Project.exe
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\bin\Debug\COMPX323_Project.pdb
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\bin\Debug\Oracle.ManagedDataAccess.dll
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\obj\Debug\COMPX323_Project.csprojResolveAssemblyReference.cache
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\obj\Debug\COMPX323_Project.Properties.Resources.resources
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\obj\Debug\COMPX323_Project.csproj.GenerateResource.Cache
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\obj\Debug\COMPX323_Project.csproj.CoreCompileInputs.cache
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\obj\Debug\COMPX323_Project.exe
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\obj\Debug\COMPX323_Project.pdb
+H:\COMPX323_Project\COMPX323_Project\COMPX323_Project\obj\Debug\COMPX323_Project.Form1.resources
