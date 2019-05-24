@@ -353,8 +353,160 @@ namespace COMPX323_Project
             }
         }
 
+        private void Clear()
+        {
+            textBoxProductName.ResetText();
+            numericUpDownProductPrice.ResetText();
+            comboBoxWeightUnit.ResetText();
+            numericUpDownProductStock.ResetText();
+            numericUpDownProductDiscount.ResetText();
+            CategoryComboBox.ResetText();
+            CategoryNameTextBox.ResetText();
+            CategoryDescriptionTextBox.ResetText();
+        }
+
+        private void ClearNO()
+        {
+            textBoxProductNameNO.ResetText();
+            numericUpDownProductPriceNO.ResetText();
+            comboBoxWeightUnitNO.ResetText();
+            numericUpDownProductStockNO.ResetText();
+            numericUpDownProductDiscountNO.ResetText();
+            CategoryComboBoxNO.ResetText();
+            CategoryNameTextBoxNO.ResetText();
+            CategoryDescriptionTextBoxNO.ResetText();
+        }
+
+        private void buttonClearProduct_Click(object sender, EventArgs e)
+        {
+            Clear();
+        }
+
+
+        private void updateProducts()
+        {
+            try
+            {
+                listBoxUpdate.Items.Clear();
+                //get the list of products returned from the query
+                List<Product> productList = oracle.getProducts("select * from product");
+
+                //for each product returned
+                foreach (Product product in productList)
+                {
+                    listBoxUpdate.Items.Add(product.ToString());
+                }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("An error occured");
+                return;
+            }
+        }
+
+        private void updateProductsNO()
+        {
+            try
+            {
+                listBoxUpdateNO.Items.Clear();
+
+                //get the list of products returned from the query
+                List<Product> productList = mongodb.getAllProducts();
+
+                foreach(Product product in productList)
+                {
+                    listBoxUpdateNO.Items.Add(product.ToString());
+                }
+            }catch(Exception e)
+            {
+                MessageBox.Show("An error occured: " + e);
+                return;
+            }
+        }
+
+        private void buttonClearProductNO_Click(object sender, EventArgs e)
+        {
+            ClearNO();
+        }
+
         private void buttonAddProductNO_Click(object sender, EventArgs e)
         {
+            try
+            {
+                String name = textBoxProductNameNO.Text;
+                decimal price = decimal.Parse(numericUpDownProductPriceNO.Text);
+                String weight_unit = comboBoxWeightUnitNO.Text;
+                decimal stock = decimal.Parse(numericUpDownProductStockNO.Text);
+                decimal discount = decimal.Parse(numericUpDownProductDiscountNO.Text);
+                String category = "";
+                String desciption = "";
+
+                if (CategoryComboBoxNO.Visible)
+                {
+                    //get the value of the chosen category
+                    category = CategoryComboBoxNO.SelectedText;
+                }
+                else
+                {
+                    //get the value of the new category
+                    category = CategoryNameTextBoxNO.Text;
+                    desciption = CategoryDescriptionTextBoxNO.Text;
+
+                    //check if the category inputs are valid
+                    if (category == "" || desciption == "")
+                    {
+                        //one of them was empty so we show an error message and return
+                        MessageBox.Show("Need to enter a name and description for the new category");
+                        return;
+                    }
+                }
+
+                //the category input is validated, check if it exists in the database
+                if (mongodb.checkCategory(category))
+                {
+                    //it exists so we cannot add it
+                    //notiy the user
+                    MessageBox.Show("Category '" + category + "' already exists... You should select 'Choose Existing Category'");
+                    return;
+                }
+
+                //it doesnt exists so we can insert it into the database
+                oracle.Execute("insert into category values('" + category + "', '" + desciption + "')");
+
+                oracle.reader.Close();
+                oracle.conn.Dispose();
+
+                //check if any of the inputs that need validating are invalid
+                if (name == "" || price == 0 || weight_unit == "" || stock == 0)
+                {
+                    //one or more inputs were invalid so we show the values to the user
+                    MessageBox.Show(
+                        "Invalid Input : " +
+                        "\nname: " + name + " -> Cannot be empty" +
+                        "\nprice: " + price.ToString() + " -> Cannot be zero " +
+                        "\nweight_unit: " + weight_unit + " -> Need to select one " +
+                        "\nstock: " + stock.ToString() + " -> Cannot be zero "
+                        );
+                    return;
+                }
+                else
+                {
+                    //all inputs were valid
+                    //insert the product into the database
+                    String query = "insert into product values(product_sequence.NEXTVAL, '" + name + "', " + price + ", '" + weight_unit + "', " + stock + ", " + discount + ", '" + category + "')";
+                    oracle.Execute(query);
+
+                    //Notify the user
+                    MessageBox.Show("Product successfully added");
+                    Clear();
+                    updateProducts();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex);
+            }
             //try
             //{
             //    String name = textBoxProductName.Text;
@@ -434,82 +586,6 @@ namespace COMPX323_Project
             //    MessageBox.Show("Product not successfully added");
             //    return;
             //}
-        }
-
-        private void Clear()
-        {
-            textBoxProductName.ResetText();
-            numericUpDownProductPrice.ResetText();
-            comboBoxWeightUnit.ResetText();
-            numericUpDownProductStock.ResetText();
-            numericUpDownProductDiscount.ResetText();
-            CategoryComboBox.ResetText();
-            CategoryNameTextBox.ResetText();
-            CategoryDescriptionTextBox.ResetText();
-        }
-
-        private void ClearNO()
-        {
-            textBoxProductNameNO.ResetText();
-            numericUpDownProductPriceNO.ResetText();
-            comboBoxWeightUnitNO.ResetText();
-            numericUpDownProductStockNO.ResetText();
-            numericUpDownProductDiscountNO.ResetText();
-            CategoryComboBoxNO.ResetText();
-            CategoryNameTextBoxNO.ResetText();
-            CategoryDescriptionTextBoxNO.ResetText();
-        }
-
-        private void buttonClearProduct_Click(object sender, EventArgs e)
-        {
-            Clear();
-        }
-
-
-        private void updateProducts()
-        {
-            try
-            {
-                listBoxUpdate.Items.Clear();
-                //get the list of products returned from the query
-                List<Product> productList = oracle.getProducts("select * from product");
-
-                //for each product returned
-                foreach (Product product in productList)
-                {
-                    listBoxUpdate.Items.Add(product.ToString());
-                }
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("An error occured");
-                return;
-            }
-        }
-
-        private void updateProductsNO()
-        {
-            try
-            {
-                listBoxUpdateNO.Items.Clear();
-
-                //get the list of products returned from the query
-                List<Product> productList = mongodb.getAllProducts();
-
-                foreach(Product product in productList)
-                {
-                    listBoxUpdateNO.Items.Add(product.ToString());
-                }
-            }catch(Exception e)
-            {
-                MessageBox.Show("An error occured: " + e);
-                return;
-            }
-        }
-
-        private void buttonClearProductNO_Click(object sender, EventArgs e)
-        {
-            ClearNO();
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 
 namespace COMPX323_Project
 {
@@ -108,30 +109,28 @@ namespace COMPX323_Project
             return productList;
         }
 
-        public List<Category> getCategories(String query)
+        public List<Category> getAllCategories()
         {
             List<Category> categoryList = new List<Category>();
 
-            //Execute(query);
+            var products = db.GetCollection<BsonDocument>("Products");
+            var resultDoc = products.Find(new BsonDocument()).ToList();
 
-            //while (reader.Read())
-            //{
-            //    Category category = new Category(
-            //        reader.GetString(0),
-            //        reader.GetString(1)
-            //    );
-            //    categoryList.Add(category);
-            //}
+            foreach (var item in resultDoc)
+            {
+                Category category = new Category(
+                    item.GetElement("name").Value.ToString(),
+                    item.GetElement("description").Value.ToString()
+                );
 
-            //reader.Close();
-            //conn.Dispose();
+                categoryList.Add(category);
+            }
 
             return categoryList;
         }
 
         public bool checkCategory(String category)
         {
-            String query = "select lower(name) from category where name like lower('" + category+"')";
             //Execute(query);
             //bool exists = false;
 
@@ -144,6 +143,23 @@ namespace COMPX323_Project
             ////close and release all resources
             //reader.Close();
             //conn.Dispose();
+
+            try
+            {
+                var categories = db.GetCollection<BsonDocument>("Categories");
+                string myjson = "[{$match:{\"name\": \""+category+"\"}}, {$count: 'name'}]";
+                var doc = new BsonDocument {
+                    { "values", BsonSerializer.Deserialize<BsonArray>(myjson) }
+                };
+
+                categories.Find(doc);
+
+
+            }
+            catch(Exception e)
+            {
+
+            }
 
             return false;
             
