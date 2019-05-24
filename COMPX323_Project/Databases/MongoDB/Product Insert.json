@@ -1,0 +1,18 @@
+{ "number":1,  "name":"Yellow Bananas",  "price":2.99, "weightunit":"KG",  "stock":242.16, "discount":0, "category":"Bananas"}
+{ "number":2,  "name":"Dole Bobby Bananas 850g",  "price":3.29, "weightunit":"EA",  "stock":72, "discount":0, "category":"Bananas"}
+{ "number":3,  "name":"Granny Smith Apples",  "price":3.59, "weightunit":"KG",  "stock":92.42, "discount":0, "category":"Apples"}
+{ "number":4,  "name":"Royal Gala Apples",  "price":3.49, "weightunit":"KG",  "stock":164.19, "discount":0, "category":"Apples"}
+{ "number":5,  "name":"Hass Avocadoes",  "price":2.19, "weightunit":"EA",  "stock":70, "discount":0, "category":"Misc"}
+{ "number":6,  "name":"Broccoli",  "price":1.99, "weightunit":"EA",  "stock":95, "discount":0, "category":"Greens"}
+{ "number":7,  "name":"Tomatoes Truss",  "price":3.99, "weightunit":"KG",  "stock":61.94, "discount":0, "category":"Tomatoes"}
+{ "number":8,  "name":"Tomatoes Loose",  "price":3.99, "weightunit":"KG",  "stock":70.13, "discount":0, "category":"Tomatoes"}
+{ "number":9,  "name":"Beekist Angel Tomatoes 200g",  "price":3.19, "weightunit":"EA",  "stock":0, "discount":0, "category":"Tomatoes"}
+{ "number":10,  "name":"Fancy Lettuce",  "price":2.69, "weightunit":"EA",  "stock":50, "discount":0, "category":"Lettuce"}
+{ "number":11,  "name":"Iceberg Lettuce",  "price":2.19, "weightunit":"EA",  "stock":91, "discount":0, "category":"Lettuce"}
+{ "number":12,  "name":"Flat Mushrooms",  "price":12.99, "weightunit":"KG",  "stock":8.53, "discount":0, "category":"Mushrooms"}
+{ "number":13,  "name":"White Button Mushrooms",  "price":10.99, "weightunit":"KG",  "stock":12.01, "discount":0, "category":"Mushrooms"}
+{ "number":14,  "name":"Gold Kiwifruit",  "price":4.99, "weightunit":"KG",  "stock":0, "discount":0, "category":"Misc"}
+{ "number":15,  "name":"Green Valley Milk Blue 2L",  "price":3.39, "weightunit":"EA",  "stock":79, "discount":0, "category":"Dairy"}
+{ "number":16,  "name":"Green Valley Milk Light 2L",  "price":3.39, "weightunit":"EA",  "stock":85, "discount":0, "category":"Dairy"}
+{ "number":17,  "name":"Anchor Pure Butter 500g",  "price":5.19, "weightunit":"EA",  "stock":56, "discount":0, "category":"Dairy"}
+{ "number":18,  "name":"Tararua Butter 500g",  "price":5.29, "weightunit":"EA",  "stock":0, "discount":0, "category":"Dairy"}

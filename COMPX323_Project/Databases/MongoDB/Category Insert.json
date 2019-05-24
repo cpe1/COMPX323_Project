@@ -1,0 +1,9 @@
+{ "name":"Apples", "description":"All varieties of Apples" }
+{ "name":"Bananas", "description":"All varieties of Bananas" }
+{ "name":"Tomatoes", "description":"All varieties of Tomatoes" }
+{ "name":"Greens", "description":"All vegetables that are green leafed and don't have a specific category" }
+{ "name":"Lettuce", "description":"All varieties of Lettuce" }
+{ "name":"Mushrooms", "description":"All varieties of Mushrooms" }
+{ "name":"Dairy", "description":"All dairy products such as Milk, Butter and Cheese" }
+{ "name":"Canned", "description":"All canned products" }
+{ "name":"Misc", "description":"All miscellaneous items that cannot be placed in a category" }
