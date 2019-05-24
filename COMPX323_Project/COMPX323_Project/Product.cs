@@ -28,11 +28,11 @@ namespace COMPX323_Project
 
         public override string ToString()
         {
-            return name.PadRight(70 - name.Length) + "\t" +
-            price.ToString().PadRight(20 - price.ToString().Length) + "\t" +
-            weight_unit.ToString().PadRight(20 - weight_unit.Length) + "\t" +
-            stock.ToString().PadRight(20 - stock.ToString().Length) + "\t" +
-            discount.ToString().PadRight(20 - discount.ToString().Length);
+            return name.PadRight(60 - name.Length) + "\t\t" +
+            price.ToString().PadRight(10 - price.ToString().Length) + "\t\t" +
+            weight_unit.ToString().PadRight(10 - weight_unit.Length) + "\t\t" +
+            stock.ToString().PadRight(10 - stock.ToString().Length) + "\t\t" +
+            discount.ToString().PadRight(10 - discount.ToString().Length);
 
         }
     }
