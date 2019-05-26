@@ -20,7 +20,7 @@ namespace COMPX323_Project
 
         public MongoDB(String username, String password, String hostname, int port, String database)
         {
-            dbClient = new MongoClient("mongodb://"+username+":"+password+"@"+hostname+":"+port+"/"+database);
+            dbClient = new MongoClient("mongodb://" + username + ":" + password + "@" + hostname + ":" + port + "/" + database);
             db = dbClient.GetDatabase("compx323-20");
         }
 
@@ -40,48 +40,10 @@ namespace COMPX323_Project
             var collList = db.ListCollections().ToList();
 
             Console.WriteLine("The list of collections are: ");
-            foreach(var item in collList)
+            foreach (var item in collList)
             {
                 Console.WriteLine(item);
             }
-        }
-
-        public void insert(String collectionName, BsonDocument document)
-        {
-            try
-            {
-                //get the collection we want to store the data in
-                var collection = db.GetCollection<BsonDocument>(collectionName);
-
-                //insert the document into the collection
-                collection.InsertOne(document);
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("An error occurred: " + e);
-
-            }
-        }
-
-
-        public void Execute(String query)
-        {
-            //try
-            //{
-            //    conn = new OracleConnection(oradb);
-            //    conn.Open();
-            //    OracleCommand cmd = new OracleCommand();
-            //    cmd.Connection = conn;
-            //    cmd.CommandText = query;
-            //    cmd.CommandType = CommandType.Text;
-            //    reader = cmd.ExecuteReader();
-
-            //    Console.WriteLine("ORACLE EXECUTION: SUCCESS");
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine("ORACLE EXECUTION: " + e);
-            //}
         }
 
 
@@ -92,7 +54,7 @@ namespace COMPX323_Project
             var products = db.GetCollection<BsonDocument>("Products");
             var resultDoc = products.Find(new BsonDocument()).ToList();
 
-            foreach(var item in resultDoc)
+            foreach (var item in resultDoc)
             {
                 Product product = new Product(
                     item.GetElement("number").Value.ToDecimal(),
@@ -113,8 +75,8 @@ namespace COMPX323_Project
         {
             List<Category> categoryList = new List<Category>();
 
-            var products = db.GetCollection<BsonDocument>("Products");
-            var resultDoc = products.Find(new BsonDocument()).ToList();
+            var categories = db.GetCollection<BsonDocument>("Categories");
+            var resultDoc = categories.Find(new BsonDocument()).ToList();
 
             foreach (var item in resultDoc)
             {
@@ -131,55 +93,116 @@ namespace COMPX323_Project
 
         public bool checkCategory(String category)
         {
-            //Execute(query);
-            //bool exists = false;
+            var categories = db.GetCollection<BsonDocument>("Categories");
 
-            //if (reader.HasRows)
-            //{
-            //    //return true if the category exists
-            //    exists = true;
-            //}
+            var pipeline = new BsonDocument[] {
+                new BsonDocument { { "$match", new BsonDocument("name", category) } }
+            };
+ 
+            var resultDoc = categories.Aggregate<BsonDocument>(pipeline).ToList();
 
-            ////close and release all resources
-            //reader.Close();
-            //conn.Dispose();
-
-            try
+            if (resultDoc.Count > 0)
             {
-                var categories = db.GetCollection<BsonDocument>("Categories");
-                string myjson = "[{$match:{\"name\": \""+category+"\"}}, {$count: 'name'}]";
-                var doc = new BsonDocument {
-                    { "values", BsonSerializer.Deserialize<BsonArray>(myjson) }
-                };
-
-                categories.Find(doc);
-
-
-            }
-            catch(Exception e)
-            {
-
+                Console.Write("Check Category - returned results " + resultDoc.Count);
+                return true;
             }
 
             return false;
-            
         }
 
         public List<String> getWeightUnits()
         {
             List<String> weightUnitList = new List<String>();
-            String query = "select distinct(weight_unit) from product";
-            //Execute(query);
 
-            //while (reader.Read())
-            //{
-            //    weightUnitList.Add(reader.GetString(0));
-            //}
+            var products = db.GetCollection<BsonDocument>("Products");
+            var pipeline = new BsonDocument[] {
+                new BsonDocument{ { "$group", new BsonDocument("_id", "$weightunit") }}
+            };
 
-            //reader.Close();
-            //conn.Dispose();
+
+            var resultDoc = products.Aggregate<BsonDocument>(pipeline).ToList();
+
+            foreach (var item in resultDoc)
+            {
+                weightUnitList.Add(item.GetElement("_id").Value.ToString());
+            }
 
             return weightUnitList;
+        }
+
+        public void insertCategory(String category, String description)
+        {
+            
+            try
+            {
+                var categories = db.GetCollection<BsonDocument>("Categories");
+
+                BsonDocument categoryDoc = new BsonDocument();
+
+                BsonElement categoryName = new BsonElement("name", category);
+                BsonElement categoryDescription = new BsonElement("description", description);
+                categoryDoc.Add(categoryName);
+                categoryDoc.Add(categoryDescription);
+
+                categories.InsertOne(categoryDoc);
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+            };
+        }
+
+        public void insertProduct(String name, decimal price, String weight_unit, decimal stock, decimal discount, String category)
+        {
+            try
+            {
+                var products = db.GetCollection<BsonDocument>("Products");
+
+                BsonDocument productDoc = new BsonDocument();
+
+                BsonElement productNumber = new BsonElement("number", getProductNumber());
+                BsonElement productName = new BsonElement("name", name);
+                BsonElement productPrice = new BsonElement("price", price);
+                BsonElement productWeightUnit = new BsonElement("weightunit", weight_unit);
+                BsonElement productStock = new BsonElement("stock", stock);
+                BsonElement productDiscount = new BsonElement("discount", discount);
+                BsonElement productCategory = new BsonElement("category", category);
+
+                productDoc.Add(productNumber);
+                productDoc.Add(productName);
+                productDoc.Add(productPrice);
+                productDoc.Add(productWeightUnit);
+                productDoc.Add(productStock);
+                productDoc.Add(productDiscount);
+                productDoc.Add(productCategory);
+
+                products.InsertOne(productDoc);
+
+            }catch(Exception e)
+            {
+                Console.Write(e);
+            }
+        }
+
+        public int getProductNumber()
+        {
+            var products = db.GetCollection<BsonDocument>("Products");
+
+            var pipeline = new BsonDocument[] {
+                new BsonDocument{ { "$count", "name" }}
+            };
+
+
+            var resultDoc = products.Aggregate<BsonDocument>(pipeline).ToList();
+            int productNumber = 0;
+
+            foreach (var item in resultDoc)
+            {
+                productNumber = item.GetElement("name").Value.ToInt32();
+            }
+
+            return productNumber+1;
+
         }
 
     }

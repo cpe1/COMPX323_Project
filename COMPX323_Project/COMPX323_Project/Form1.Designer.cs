@@ -725,6 +725,7 @@
             this.radioButton2NO.TabStop = true;
             this.radioButton2NO.Text = "Add a new Category";
             this.radioButton2NO.UseVisualStyleBackColor = true;
+            this.radioButton2NO.Click += new System.EventHandler(this.radioButton2NO_Click);
             // 
             // radioButton1NO
             // 
@@ -736,6 +737,7 @@
             this.radioButton1NO.TabStop = true;
             this.radioButton1NO.Text = "Choose Existing Category";
             this.radioButton1NO.UseVisualStyleBackColor = true;
+            this.radioButton1NO.Click += new System.EventHandler(this.radioButton1NO_Click);
             // 
             // CategoryDescriptionLabelNO
             // 

@@ -65,6 +65,7 @@ namespace COMPX323_Project
         public void setupNoSQL()
         {
             radioButton1NO.Checked = true;
+
             //get all categories
             handleCateoriesNO();
 
@@ -100,6 +101,7 @@ namespace COMPX323_Project
             {
                 List<Category> categoryList = oracle.getCategories("select * from category");
                 CategoryListBox.Refresh();
+                CategoryComboBox.Refresh();
 
                 foreach(Category category in categoryList)
                 {
@@ -116,22 +118,23 @@ namespace COMPX323_Project
 
         private void handleCateoriesNO()
         {
-            //try
-            //{
-            //    List<Category> categoryList = oracle.getCategories("select * from category");
-            //    CategoryListBox.Refresh();
+            try
+            {
+                List<Category> categoryList = mongodb.getAllCategories();
+                CategoryListBoxNO.Refresh();
+                CategoryComboBoxNO.Refresh();
 
-            //    foreach (Category category in categoryList)
-            //    {
-            //        CategoryListBox.Items.Add(category.name);
-            //        CategoryComboBox.Items.Add(category.name);
-            //    }
+                foreach (Category category in categoryList)
+                {
+                    CategoryListBoxNO.Items.Add(category.name);
+                    CategoryComboBoxNO.Items.Add(category.name);
+                }
 
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine("An error occurred\n" + e);
-            //}
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred\n" + e);
+            }
         }
 
         private void productButton_Click(object sender, EventArgs e)
@@ -213,24 +216,7 @@ namespace COMPX323_Project
             }
         }
 
-        private void CategoryListBoxNO_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //int index = CategoryListBox.SelectedIndex;
-            //ProductListBox.Items.Clear();
 
-            //String category = CategoryListBox.Items[index].ToString();
-
-            //List<Product> productList = oracle.getProducts(
-            //    "select serial_number, product.name, price, weight_unit, stock, discount " +
-            //    "from product, category " +
-            //    "where product.category_name = category.name " +
-            //    "and lower(category.name) like lower('%" + category + "%')");
-
-            //foreach (Product product in productList)
-            //{
-            //    ProductListBox.Items.Add(product.ToString());
-            //}
-        }
 
         private void radioButton1_Click(object sender, EventArgs e)
         {
@@ -241,15 +227,7 @@ namespace COMPX323_Project
             CategoryDescriptionLabel.Visible = false;
             CategoryDescriptionTextBox.Visible = false;
         }
-        private void radioButton1NO_Click(object sender, EventArgs e)
-        {
-            CategoryComboBoxNO.Visible = true;
-            labelCategoryChooseNO.Visible = true;
-            CategoryNameLabelNO.Visible = false;
-            CategoryNameTextBoxNO.Visible = false;
-            CategoryDescriptionLabelNO.Visible = false;
-            CategoryDescriptionTextBox.Visible = false;
-        }
+        
 
         private void radioButton2_Click(object sender, EventArgs e)
         {
@@ -260,15 +238,7 @@ namespace COMPX323_Project
             CategoryDescriptionLabel.Visible = true;
             CategoryDescriptionTextBox.Visible = true;
         }
-        private void radioButton2NO_Click(object sender, EventArgs e)
-        {
-            CategoryComboBoxNO.Visible = false;
-            labelCategoryChooseNO.Visible = false;
-            CategoryNameLabelNO.Visible = true;
-            CategoryNameTextBoxNO.Visible = true;
-            CategoryDescriptionLabelNO.Visible = true;
-            CategoryDescriptionTextBoxNO.Visible = true;
-        }
+
 
 
         private void buttonAddProduct_Click(object sender, EventArgs e)
@@ -282,6 +252,7 @@ namespace COMPX323_Project
                 decimal discount = decimal.Parse(numericUpDownProductDiscount.Text);
                 String category = "";
                 String desciption = "";
+                bool newCategory = false;
 
                 if (CategoryComboBox.Visible)
                 {
@@ -311,9 +282,10 @@ namespace COMPX323_Project
                     MessageBox.Show("Category '" + category + "' already exists... You should select 'Choose Existing Category'");
                     return;
                 }
-
-                //it doesnt exists so we can insert it into the database
-                oracle.Execute("insert into category values('" + category + "', '" + desciption + "')");
+                else
+                {
+                    newCategory = true;
+                }
 
                 oracle.reader.Close();
                 oracle.conn.Dispose();
@@ -334,6 +306,10 @@ namespace COMPX323_Project
                 else
                 {
                     //all inputs were valid
+                    if (newCategory)
+                    {
+                        oracle.Execute("insert into category values('" + category + "', '" + desciption + "')");
+                    }
                     //insert the product into the database
                     String query = "insert into product values(product_sequence.NEXTVAL, '"+name+"', "+price+", '"+weight_unit+"', "+stock+", "+discount+", '"+category+"')";
                     oracle.Execute(query);
@@ -342,7 +318,8 @@ namespace COMPX323_Project
                     MessageBox.Show("Product successfully added");
                     Clear();
                     updateProducts();
-                    
+                    handleCateories();
+
                 }
             }
             catch(Exception ex){
@@ -439,7 +416,8 @@ namespace COMPX323_Project
                 decimal stock = decimal.Parse(numericUpDownProductStockNO.Text);
                 decimal discount = decimal.Parse(numericUpDownProductDiscountNO.Text);
                 String category = "";
-                String desciption = "";
+                String description = "";
+                bool newCategory = false;
 
                 if (CategoryComboBoxNO.Visible)
                 {
@@ -450,31 +428,35 @@ namespace COMPX323_Project
                 {
                     //get the value of the new category
                     category = CategoryNameTextBoxNO.Text;
-                    desciption = CategoryDescriptionTextBoxNO.Text;
+                    description = CategoryDescriptionTextBoxNO.Text;
 
                     //check if the category inputs are valid
-                    if (category == "" || desciption == "")
+                    if (category == "" || description == "")
                     {
                         //one of them was empty so we show an error message and return
                         MessageBox.Show("Need to enter a name and description for the new category");
                         return;
                     }
+
+
+                    //the category input is validated, check if it exists in the database
+                    if (mongodb.checkCategory(category))
+                    {
+                        //it exists so we cannot add it
+                        //notiy the user
+                        MessageBox.Show("Category '" + category + "' already exists... You should select 'Choose Existing Category'");
+                        return;
+                    }
+                    else
+                    {
+                        newCategory = true;
+                    }
+
                 }
+                
 
-                //the category input is validated, check if it exists in the database
-                if (mongodb.checkCategory(category))
-                {
-                    //it exists so we cannot add it
-                    //notiy the user
-                    MessageBox.Show("Category '" + category + "' already exists... You should select 'Choose Existing Category'");
-                    return;
-                }
-
-                //it doesnt exists so we can insert it into the database
-                oracle.Execute("insert into category values('" + category + "', '" + desciption + "')");
-
-                oracle.reader.Close();
-                oracle.conn.Dispose();
+                //oracle.reader.Close();
+                //oracle.conn.Dispose();
 
                 //check if any of the inputs that need validating are invalid
                 if (name == "" || price == 0 || weight_unit == "" || stock == 0)
@@ -492,14 +474,21 @@ namespace COMPX323_Project
                 else
                 {
                     //all inputs were valid
+                    //check if we need to add the new category
+                    if (newCategory)
+                    {
+                        //insert the category into the database
+                        mongodb.insertCategory(category, description);
+                    }
+                    
                     //insert the product into the database
-                    String query = "insert into product values(product_sequence.NEXTVAL, '" + name + "', " + price + ", '" + weight_unit + "', " + stock + ", " + discount + ", '" + category + "')";
-                    oracle.Execute(query);
+                    mongodb.insertProduct(name, price, weight_unit, stock, discount, category);
 
                     //Notify the user
                     MessageBox.Show("Product successfully added");
-                    Clear();
-                    updateProducts();
+                    ClearNO();
+                    updateProductsNO();
+                    handleCateoriesNO();
 
                 }
             }
@@ -507,85 +496,26 @@ namespace COMPX323_Project
             {
                 MessageBox.Show("An error occurred: " + ex);
             }
-            //try
-            //{
-            //    String name = textBoxProductName.Text;
-            //    decimal price = decimal.Parse(numericUpDownProductPrice.Text);
-            //    String weight_unit = comboBoxWeightUnit.Text;
-            //    decimal stock = decimal.Parse(numericUpDownProductStock.Text);
-            //    decimal discount = decimal.Parse(numericUpDownProductDiscount.Text);
-            //    String category = "";
-            //    String desciption = "";
+        }
 
-            //    if (CategoryComboBox.Visible)
-            //    {
-            //        //get the value of the chosen category
-            //        category = CategoryComboBox.SelectedText;
-            //    }
-            //    else
-            //    {
-            //        //get the value of the new category
-            //        category = CategoryNameTextBox.Text;
-            //        desciption = CategoryDescriptionTextBox.Text;
+        private void radioButton1NO_Click(object sender, EventArgs e)
+        {
+            CategoryComboBoxNO.Visible = true;
+            labelCategoryChooseNO.Visible = true;
+            CategoryNameLabelNO.Visible = false;
+            CategoryNameTextBoxNO.Visible = false;
+            CategoryDescriptionLabelNO.Visible = false;
+            CategoryDescriptionTextBoxNO.Visible = false;
+        }
 
-            //        //check if the category inputs are valid
-            //        if (category == "" || desciption == "")
-            //        {
-            //            //one of them was empty so we show an error message and return
-            //            MessageBox.Show("Need to enter a name and description for the new category");
-            //            return;
-            //        }
-            //    }
-
-            //    //the category input is validated, check if it exists in the database
-            //    if (oracle.checkCategory(category))
-            //    {
-            //        //it exists so we cannot add it
-            //        //notiy the user
-            //        MessageBox.Show("Category '" + category + "' already exists... You should select 'Choose Existing Category'");
-            //        return;
-            //    }
-
-            //    //it doesnt exists so we can insert it into the database
-            //    oracle.Execute("insert into category values('" + category + "', '" + desciption + "')");
-
-            //    oracle.reader.Close();
-            //    oracle.conn.Dispose();
-
-            //    //check if any of the inputs that need validating are invalid
-            //    if (name == "" || price == 0 || weight_unit == "" || stock == 0)
-            //    {
-            //        //one or more inputs were invalid so we show the values to the user
-            //        MessageBox.Show(
-            //            "Invalid Input : " +
-            //            "\nname: " + name + " -> Cannot be empty" +
-            //            "\nprice: " + price.ToString() + " -> Cannot be zero " +
-            //            "\nweight_unit: " + weight_unit + " -> Need to select one " +
-            //            "\nstock: " + stock.ToString() + " -> Cannot be zero "
-            //            );
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        //all inputs were valid
-            //        //insert the product into the database
-            //        String query = "insert into product values(product_sequence.NEXTVAL, '" + name + "', " + price + ", '" + weight_unit + "', " + stock + ", " + discount + ", '" + category + "')";
-            //        oracle.Execute(query);
-
-            //        //Notify the user
-            //        MessageBox.Show("Product successfully added");
-            //        Clear();
-            //        updateProducts();
-
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    //if an error occurs at any moment
-            //    Console.WriteLine(ex);
-            //    MessageBox.Show("Product not successfully added");
-            //    return;
-            //}
+        private void radioButton2NO_Click(object sender, EventArgs e)
+        {
+            CategoryComboBoxNO.Visible = false;
+            labelCategoryChooseNO.Visible = false;
+            CategoryNameLabelNO.Visible = true;
+            CategoryNameTextBoxNO.Visible = true;
+            CategoryDescriptionLabelNO.Visible = true;
+            CategoryDescriptionTextBoxNO.Visible = true;
         }
     }
 }
