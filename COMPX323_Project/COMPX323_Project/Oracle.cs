@@ -92,7 +92,7 @@ namespace COMPX323_Project
 
         public bool checkCategory(String category)
         {
-            String query = "select lower(name) from category where name like lower('" + category+"')";
+            String query = "select lower(name) from category where lower(name) like lower('" + category+"')";
             Execute(query);
             bool exists = false;
 

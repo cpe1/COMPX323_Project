@@ -248,19 +248,20 @@ namespace COMPX323_Project
                         MessageBox.Show("Need to enter a name and description for the new category");
                         return;
                     }
-                }
 
-                //the category input is validated, check if it exists in the database
-                if (oracle.checkCategory(category))
-                {
-                    //it exists so we cannot add it
-                    //notiy the user
-                    MessageBox.Show("Category '" + category + "' already exists... You should select 'Choose Existing Category'");
-                    return;
-                }
-                else
-                {
-                    newCategory = true;
+
+                    //the category input is validated, check if it exists in the database
+                    if (oracle.checkCategory(category))
+                    {
+                        //it exists so we cannot add it
+                        //notiy the user
+                        MessageBox.Show("Category '" + category + "' already exists... You should select 'Choose Existing Category'");
+                        return;
+                    }
+                    else
+                    {
+                        newCategory = true;
+                    }
                 }
 
                 oracle.reader.Close();
