@@ -206,7 +206,7 @@ namespace COMPX323_Project
 
         }
 
-        public List<Product> getProducts(String input)
+        public List<Product> getProducts(String field, String input)
         {
             List<Product> productList = new List<Product>();
 
@@ -216,7 +216,7 @@ namespace COMPX323_Project
            //     new BsonDocument { { "$match", new BsonDocument("name", input) } }
            // };
 
-            BsonDocument doc = new BsonDocument { { "name", new Regex("(?i)" + input) } };
+            BsonDocument doc = new BsonDocument { { field, new Regex("(?i)" + input) } };
             var resultDoc = products.Find<BsonDocument>(doc).ToList();
 
             //var resultDoc = products.Aggregate<BsonDocument>(pipeline).ToList();

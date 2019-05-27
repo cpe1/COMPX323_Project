@@ -194,8 +194,6 @@ namespace COMPX323_Project
             }
         }
 
-
-
         private void radioButton1_Click(object sender, EventArgs e)
         {
             CategoryComboBox.Visible = true;
@@ -510,7 +508,7 @@ namespace COMPX323_Project
                 {
                     ProductListBoxNO.Items.Clear();
                     //get the list of products returned from the query
-                    List<Product> productList = mongodb.getProducts(input);
+                    List<Product> productList = mongodb.getProducts("name", input);
 
                     
                     if(productList.Count == 0)
@@ -532,6 +530,21 @@ namespace COMPX323_Project
                 Console.WriteLine("An error occurred\n" + ex);
             }
 
+        }
+
+        private void CategoryListBoxNO_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = CategoryListBoxNO.SelectedIndex;
+            ProductListBoxNO.Items.Clear();
+
+            String category = CategoryListBoxNO.Items[index].ToString();
+
+            List<Product> productList = mongodb.getProducts("category", category);
+
+            foreach (Product product in productList)
+            {
+                ProductListBoxNO.Items.Add(product.ToString());
+            }
         }
     }
 }
