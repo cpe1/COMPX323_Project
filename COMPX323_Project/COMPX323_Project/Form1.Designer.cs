@@ -415,6 +415,11 @@
             // 
             this.numericUpDownProductDiscount.DecimalPlaces = 2;
             this.numericUpDownProductDiscount.Location = new System.Drawing.Point(130, 159);
+            this.numericUpDownProductDiscount.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownProductDiscount.Name = "numericUpDownProductDiscount";
             this.numericUpDownProductDiscount.Size = new System.Drawing.Size(112, 20);
             this.numericUpDownProductDiscount.TabIndex = 14;
@@ -848,6 +853,11 @@
             // 
             this.numericUpDownProductDiscountNO.DecimalPlaces = 2;
             this.numericUpDownProductDiscountNO.Location = new System.Drawing.Point(130, 159);
+            this.numericUpDownProductDiscountNO.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownProductDiscountNO.Name = "numericUpDownProductDiscountNO";
             this.numericUpDownProductDiscountNO.Size = new System.Drawing.Size(112, 20);
             this.numericUpDownProductDiscountNO.TabIndex = 14;
