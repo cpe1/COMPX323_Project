@@ -31,8 +31,8 @@ namespace COMPX323_Project
             return name.PadRight(60 - name.Length) + "\t\t" +
             price.ToString().PadRight(10 - price.ToString().Length) + "\t\t" +
             weight_unit.ToString().PadRight(10 - weight_unit.Length) + "\t\t" +
-            stock.ToString().PadRight(10 - stock.ToString().Length) + "\t\t" +
-            discount.ToString().PadRight(10 - discount.ToString().Length);
+            ((int)stock).ToString().PadRight(10 - ((int)stock).ToString().Length) + "\t\t" +
+            ((int)(discount * 100)).ToString().PadRight(10 - ((int)(discount*100)).ToString().Length);
 
         }
     }

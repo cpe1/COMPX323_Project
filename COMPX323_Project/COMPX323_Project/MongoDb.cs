@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using System.Text.RegularExpressions;
 
 namespace COMPX323_Project
 {
@@ -98,7 +99,7 @@ namespace COMPX323_Project
             var pipeline = new BsonDocument[] {
                 new BsonDocument { { "$match", new BsonDocument("name", category) } }
             };
- 
+
             var resultDoc = categories.Aggregate<BsonDocument>(pipeline).ToList();
 
             if (resultDoc.Count > 0)
@@ -132,7 +133,7 @@ namespace COMPX323_Project
 
         public void insertCategory(String category, String description)
         {
-            
+
             try
             {
                 var categories = db.GetCollection<BsonDocument>("Categories");
@@ -178,7 +179,7 @@ namespace COMPX323_Project
 
                 products.InsertOne(productDoc);
 
-            }catch(Exception e)
+            } catch (Exception e)
             {
                 Console.Write(e);
             }
@@ -201,8 +202,40 @@ namespace COMPX323_Project
                 productNumber = item.GetElement("name").Value.ToInt32();
             }
 
-            return productNumber+1;
+            return productNumber + 1;
 
+        }
+
+        public List<Product> getProducts(String input)
+        {
+            List<Product> productList = new List<Product>();
+
+            var products = db.GetCollection<BsonDocument>("Products");
+
+           // var pipeline = new BsonDocument[] {
+           //     new BsonDocument { { "$match", new BsonDocument("name", input) } }
+           // };
+
+            BsonDocument doc = new BsonDocument { { "name", new Regex("(?i)" + input) } };
+            var resultDoc = products.Find<BsonDocument>(doc).ToList();
+
+            //var resultDoc = products.Aggregate<BsonDocument>(pipeline).ToList();
+
+            foreach (var item in resultDoc) {
+                Product product = new Product(
+                    item.GetElement("number").Value.ToDecimal(),
+                    item.GetElement("name").Value.ToString(),
+                    item.GetElement("price").Value.ToDecimal(),
+                    item.GetElement("weightunit").Value.ToString(),
+                    item.GetElement("stock").Value.ToDecimal(),
+                    item.GetElement("discount").Value.ToDecimal()
+                    );
+
+                productList.Add(product);
+                
+            }
+
+            return productList;
         }
 
     }

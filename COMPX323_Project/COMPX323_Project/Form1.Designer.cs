@@ -975,6 +975,7 @@
             this.productButtonNO.TabIndex = 1;
             this.productButtonNO.Text = "Search";
             this.productButtonNO.UseVisualStyleBackColor = true;
+            this.productButtonNO.Click += new System.EventHandler(this.productButtonNO_Click);
             // 
             // ProductTextBoxNO
             // 

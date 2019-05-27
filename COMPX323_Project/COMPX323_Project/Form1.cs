@@ -100,10 +100,10 @@ namespace COMPX323_Project
             try
             {
                 List<Category> categoryList = oracle.getCategories("select * from category");
-                CategoryListBox.Refresh();
-                CategoryComboBox.Refresh();
+                CategoryListBox.Items.Clear();
+                CategoryComboBox.Items.Clear();
 
-                foreach(Category category in categoryList)
+                foreach (Category category in categoryList)
                 {
                     CategoryListBox.Items.Add(category.name);
                     CategoryComboBox.Items.Add(category.name);
@@ -121,8 +121,8 @@ namespace COMPX323_Project
             try
             {
                 List<Category> categoryList = mongodb.getAllCategories();
-                CategoryListBoxNO.Refresh();
-                CategoryComboBoxNO.Refresh();
+                CategoryListBoxNO.Items.Clear();
+                CategoryComboBoxNO.Items.Clear();
 
                 foreach (Category category in categoryList)
                 {
@@ -153,6 +153,12 @@ namespace COMPX323_Project
                     //get the list of products returned from the query
                     List<Product> productList = oracle.getProducts("select * from product where lower(name) like lower('%"+input+"%')");
 
+                    if (productList.Count == 0)
+                    {
+                        MessageBox.Show("No results");
+                        return;
+                    }
+
                     //for each product returned
                     foreach (Product product in productList)
                     {
@@ -167,35 +173,7 @@ namespace COMPX323_Project
 
         }
 
-        private void productButtonNO_Click(object sender, EventArgs e)
-        {
-            //try
-            //{
-            //    String input = ProductTextBox.Text;
 
-            //    if (input == "")
-            //    {
-            //        MessageBox.Show("No Input for the search");
-            //    }
-            //    else
-            //    {
-            //        ProductListBox.Items.Clear();
-            //        //get the list of products returned from the query
-            //        List<Product> productList = oracle.getProducts("select * from product where lower(name) like lower('%" + input + "%')");
-
-            //        //for each product returned
-            //        foreach (Product product in productList)
-            //        {
-            //            ProductListBox.Items.Add(product.ToString());
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("An error occurred\n" + ex);
-            //}
-
-        }
 
         private void CategoryListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -516,6 +494,44 @@ namespace COMPX323_Project
             CategoryNameTextBoxNO.Visible = true;
             CategoryDescriptionLabelNO.Visible = true;
             CategoryDescriptionTextBoxNO.Visible = true;
+        }
+
+        private void productButtonNO_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                String input = ProductTextBoxNO.Text;
+
+                if (input == "")
+                {
+                    MessageBox.Show("No Input for the search");
+                }
+                else
+                {
+                    ProductListBoxNO.Items.Clear();
+                    //get the list of products returned from the query
+                    List<Product> productList = mongodb.getProducts(input);
+
+                    
+                    if(productList.Count == 0)
+                    {
+                        MessageBox.Show("No results");
+                        return;
+                    }
+
+                    //for each product returned
+                    foreach (Product product in productList)
+                    {
+                        ProductListBoxNO.Items.Add(product.ToString());
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred\n" + ex);
+            }
+
         }
     }
 }
