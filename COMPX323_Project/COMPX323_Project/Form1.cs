@@ -225,15 +225,19 @@ namespace COMPX323_Project
                 decimal price = decimal.Parse(numericUpDownProductPrice.Text);
                 String weight_unit = comboBoxWeightUnit.Text;
                 decimal stock = decimal.Parse(numericUpDownProductStock.Text);
-                decimal discount = decimal.Parse(numericUpDownProductDiscount.Text);
+                decimal discount = 0;
+                if (numericUpDownProductDiscount.Text != null || numericUpDownProductDiscount.Text != "") {
+                    discount = decimal.Parse(numericUpDownProductDiscount.Text);
+                }
                 String category = "";
                 String desciption = "";
                 bool newCategory = false;
 
                 if (CategoryComboBox.Visible)
                 {
+                    int index = CategoryComboBox.SelectedIndex;
                     //get the value of the chosen category
-                    category = CategoryComboBox.SelectedText;
+                    category = CategoryComboBox.Items[index].ToString();
                 }
                 else
                 {
@@ -364,6 +368,7 @@ namespace COMPX323_Project
             {
                 listBoxUpdateNO.Items.Clear();
 
+
                 //get the list of products returned from the query
                 List<Product> productList = mongodb.getAllProducts();
 
@@ -391,15 +396,25 @@ namespace COMPX323_Project
                 decimal price = decimal.Parse(numericUpDownProductPriceNO.Text);
                 String weight_unit = comboBoxWeightUnitNO.Text;
                 decimal stock = decimal.Parse(numericUpDownProductStockNO.Text);
-                decimal discount = decimal.Parse(numericUpDownProductDiscountNO.Text);
+                decimal discount = 0;
+                if (numericUpDownProductDiscountNO.Text != null || numericUpDownProductDiscountNO.Text != "")
+                {
+                    discount = decimal.Parse(numericUpDownProductDiscountNO.Text);
+                }
+                else
+                {
+                    MessageBox.Show("YO");
+                }
+                
                 String category = "";
                 String description = "";
                 bool newCategory = false;
 
                 if (CategoryComboBoxNO.Visible)
                 {
+                    int index = CategoryComboBoxNO.SelectedIndex;
                     //get the value of the chosen category
-                    category = CategoryComboBoxNO.SelectedText;
+                    category = CategoryComboBoxNO.Items[index].ToString();
                 }
                 else
                 {
@@ -430,10 +445,6 @@ namespace COMPX323_Project
                     }
 
                 }
-                
-
-                //oracle.reader.Close();
-                //oracle.conn.Dispose();
 
                 //check if any of the inputs that need validating are invalid
                 if (name == "" || price == 0 || weight_unit == "" || stock == 0)
@@ -546,6 +557,25 @@ namespace COMPX323_Project
             {
                 ProductListBoxNO.Items.Add(product.ToString());
             }
+        }
+
+        private void listBoxUpdateNO_DoubleClick(object sender, EventArgs e)
+        {
+            int index = listBoxUpdateNO.SelectedIndex;
+            String product = ProductListBoxNO.Items[index].ToString();
+            MessageBox.Show("Product: " + product);
+        }
+
+        private void listBoxUpdate_DoubleClick(object sender, EventArgs e)
+        {
+            int index = listBoxUpdate.SelectedIndex;
+            String product = ProductListBox.Items[index].ToString();
+            MessageBox.Show("Product: " + product);
+        }
+
+        private void numericUpDownProductDiscountNO_Leave(object sender, EventArgs e)
+        {
+           
         }
     }
 }

@@ -63,6 +63,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxProductName = new System.Windows.Forms.TextBox();
             this.tabPageSearch = new System.Windows.Forms.TabPage();
+            this.label36 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label35 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -95,7 +101,6 @@
             this.comboBoxWeightUnitNO = new System.Windows.Forms.ComboBox();
             this.numericUpDownProductPriceNO = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownProductDiscountNO = new System.Windows.Forms.NumericUpDown();
-            this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -104,6 +109,11 @@
             this.label21 = new System.Windows.Forms.Label();
             this.textBoxProductNameNO = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label42 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.label44 = new System.Windows.Forms.Label();
+            this.label45 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -111,17 +121,7 @@
             this.CategoryListBoxNO = new System.Windows.Forms.ListBox();
             this.productButtonNO = new System.Windows.Forms.Button();
             this.ProductTextBoxNO = new System.Windows.Forms.TextBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label42 = new System.Windows.Forms.Label();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPageAdd.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownProductStock)).BeginInit();
@@ -279,6 +279,7 @@
             this.listBoxUpdate.Name = "listBoxUpdate";
             this.listBoxUpdate.Size = new System.Drawing.Size(621, 511);
             this.listBoxUpdate.TabIndex = 30;
+            this.listBoxUpdate.DoubleClick += new System.EventHandler(this.listBoxUpdate_DoubleClick);
             // 
             // label10
             // 
@@ -427,11 +428,11 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(54, 161);
+            this.label8.Location = new System.Drawing.Point(5, 162);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(66, 13);
+            this.label8.Size = new System.Drawing.Size(128, 13);
             this.label8.TabIndex = 13;
-            this.label8.Text = "Discount (%)";
+            this.label8.Text = "Discount (% as a decimal)";
             // 
             // label7
             // 
@@ -515,6 +516,59 @@
             this.tabPageSearch.TabIndex = 0;
             this.tabPageSearch.Text = "Search";
             this.tabPageSearch.UseVisualStyleBackColor = true;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(689, 61);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(66, 13);
+            this.label36.TabIndex = 42;
+            this.label36.Text = "Discount (%)";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(607, 61);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(35, 13);
+            this.label37.TabIndex = 41;
+            this.label37.Text = "Stock";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(491, 61);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(63, 13);
+            this.label38.TabIndex = 40;
+            this.label38.Text = "Weight Unit";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(411, 61);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(46, 13);
+            this.label39.TabIndex = 39;
+            this.label39.Text = "Price ($)";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(173, 61);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(35, 13);
+            this.label40.TabIndex = 38;
+            this.label40.Text = "Name";
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(173, 58);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(0, 13);
+            this.label35.TabIndex = 9;
             // 
             // label13
             // 
@@ -607,6 +661,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label15);
             this.tabPage3.Controls.Add(this.label29);
             this.tabPage3.Controls.Add(this.label28);
             this.tabPage3.Controls.Add(this.label27);
@@ -629,7 +684,6 @@
             this.tabPage3.Controls.Add(this.comboBoxWeightUnitNO);
             this.tabPage3.Controls.Add(this.numericUpDownProductPriceNO);
             this.tabPage3.Controls.Add(this.numericUpDownProductDiscountNO);
-            this.tabPage3.Controls.Add(this.label15);
             this.tabPage3.Controls.Add(this.label16);
             this.tabPage3.Controls.Add(this.label17);
             this.tabPage3.Controls.Add(this.label18);
@@ -717,6 +771,7 @@
             this.listBoxUpdateNO.Name = "listBoxUpdateNO";
             this.listBoxUpdateNO.Size = new System.Drawing.Size(624, 511);
             this.listBoxUpdateNO.TabIndex = 30;
+            this.listBoxUpdateNO.DoubleClick += new System.EventHandler(this.listBoxUpdateNO_DoubleClick);
             // 
             // label9
             // 
@@ -799,6 +854,7 @@
             // 
             // CategoryComboBoxNO
             // 
+            this.CategoryComboBoxNO.AllowDrop = true;
             this.CategoryComboBoxNO.FormattingEnabled = true;
             this.CategoryComboBoxNO.Location = new System.Drawing.Point(142, 266);
             this.CategoryComboBoxNO.Name = "CategoryComboBoxNO";
@@ -861,15 +917,7 @@
             this.numericUpDownProductDiscountNO.Name = "numericUpDownProductDiscountNO";
             this.numericUpDownProductDiscountNO.Size = new System.Drawing.Size(112, 20);
             this.numericUpDownProductDiscountNO.TabIndex = 14;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(54, 161);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(66, 13);
-            this.label15.TabIndex = 13;
-            this.label15.Text = "Discount (%)";
+            this.numericUpDownProductDiscountNO.Leave += new System.EventHandler(this.numericUpDownProductDiscountNO_Leave);
             // 
             // label16
             // 
@@ -953,6 +1001,51 @@
             this.tabPage4.Text = "Search";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(690, 55);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(66, 13);
+            this.label41.TabIndex = 42;
+            this.label41.Text = "Discount (%)";
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Location = new System.Drawing.Point(608, 55);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(35, 13);
+            this.label42.TabIndex = 41;
+            this.label42.Text = "Stock";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(492, 55);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(63, 13);
+            this.label43.TabIndex = 40;
+            this.label43.Text = "Weight Unit";
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(412, 55);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(46, 13);
+            this.label44.TabIndex = 39;
+            this.label44.Text = "Price ($)";
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(174, 55);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(35, 13);
+            this.label45.TabIndex = 38;
+            this.label45.Text = "Name";
+            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -1018,103 +1111,14 @@
             this.ProductTextBoxNO.Size = new System.Drawing.Size(158, 26);
             this.ProductTextBoxNO.TabIndex = 3;
             // 
-            // label35
+            // label15
             // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(173, 58);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(0, 13);
-            this.label35.TabIndex = 9;
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(689, 61);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(66, 13);
-            this.label36.TabIndex = 42;
-            this.label36.Text = "Discount (%)";
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(607, 61);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(35, 13);
-            this.label37.TabIndex = 41;
-            this.label37.Text = "Stock";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(491, 61);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(63, 13);
-            this.label38.TabIndex = 40;
-            this.label38.Text = "Weight Unit";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(411, 61);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(46, 13);
-            this.label39.TabIndex = 39;
-            this.label39.Text = "Price ($)";
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(173, 61);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(35, 13);
-            this.label40.TabIndex = 38;
-            this.label40.Text = "Name";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(690, 55);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(66, 13);
-            this.label41.TabIndex = 42;
-            this.label41.Text = "Discount (%)";
-            // 
-            // label42
-            // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(608, 55);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(35, 13);
-            this.label42.TabIndex = 41;
-            this.label42.Text = "Stock";
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(492, 55);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(63, 13);
-            this.label43.TabIndex = 40;
-            this.label43.Text = "Weight Unit";
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(412, 55);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(46, 13);
-            this.label44.TabIndex = 39;
-            this.label44.Text = "Price ($)";
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(174, 55);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(35, 13);
-            this.label45.TabIndex = 38;
-            this.label45.Text = "Name";
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(2, 161);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(128, 13);
+            this.label15.TabIndex = 38;
+            this.label15.Text = "Discount (% as a decimal)";
             // 
             // Form1
             // 
@@ -1204,7 +1208,6 @@
         private System.Windows.Forms.ComboBox comboBoxWeightUnitNO;
         private System.Windows.Forms.NumericUpDown numericUpDownProductPriceNO;
         private System.Windows.Forms.NumericUpDown numericUpDownProductDiscountNO;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
@@ -1244,6 +1247,7 @@
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label label15;
     }
 }
 
